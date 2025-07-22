@@ -1,15 +1,48 @@
-*.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+# Gradle files
+.gradle/
+**/build/
+**/captures/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Local configuration file (sdk paths, etc.)
 local.properties
+
+# Log files
+*.log
+
+# Android Studio specific
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Keystore files (keep your signing keys private)
+*.jks
+*.keystore
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Crashlytics/Analytics files
+fabric.properties
+
+# Jetpack Compose previews
+*.preview
+
+# Fastlane metadata
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# Node (if using React Native or JS tools)
+node_modules/
+
+# Other IDEs
+.vscode/
+
+# Optional: exclude generated APK/AAB files
+*.apk
+*.apks
+*.aab
