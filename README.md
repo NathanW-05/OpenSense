@@ -1,2 +1,2 @@
 # OpenSense
-Free, open-source AI powered economic news overview and analaysis software. Currently being developed for android.
+A free, open-source research tool for analyzing buisness news and documents like earnings calls. 
