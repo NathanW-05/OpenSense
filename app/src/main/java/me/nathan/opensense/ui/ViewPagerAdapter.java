@@ -9,8 +9,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import java.util.List;
 
-import me.nathan.opensense.Main;
-import me.nathan.opensense.log.Logger;
+import me.nathan.opensense.ui.docs.DocsFragment;
 
 public class ViewPagerAdapter extends FragmentStateAdapter {
     private final List<String> titles;

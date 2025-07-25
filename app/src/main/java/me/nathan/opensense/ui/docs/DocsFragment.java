@@ -1,4 +1,4 @@
-package me.nathan.opensense.ui;
+package me.nathan.opensense.ui.docs;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -14,6 +14,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
+
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,6 +31,7 @@ import me.nathan.opensense.log.Logger;
 public class DocsFragment extends Fragment {
 
     private final int REQUEST_CODE_PICK_FILE = 1001;
+    private static final String[] TAB_TITLES = { "Insights", "Highlights" };
 
     private final ArrayList<Document> loadedDocuments = new ArrayList<>();
     private View docsView;
@@ -44,6 +50,25 @@ public class DocsFragment extends Fragment {
         docsView.findViewById(R.id.selectFileButton).setOnClickListener(v -> openFilePicker());
         viewingFileText = docsView.findViewById(R.id.viewingFileText);
 
+        TabLayout tabLayout   = docsView.findViewById(R.id.docsTabLayout);
+        ViewPager2 viewPager  = docsView.findViewById(R.id.docsViewPager);
+
+        viewPager.setAdapter(new FragmentStateAdapter(this) {
+            @Override public int getItemCount() {
+                return TAB_TITLES.length;
+            }
+            @NonNull @Override
+            public Fragment createFragment(int position) {
+                if (position == 0) return new InsightsFragment();
+                else             return new HighlightsFragment();
+            }
+        });
+
+        new TabLayoutMediator(tabLayout, viewPager,
+                (tab, pos) -> tab.setText(TAB_TITLES[pos])
+        ).attach();
+
+        //todo: make sure this sets the current document if one has been selected
         updateViewingFileText(null);
 
         return docsView;
@@ -59,6 +84,7 @@ public class DocsFragment extends Fragment {
 
     // Extracts the text from selected file, loads it to list, sets it as viewing file
     //todo: handle this extraction async or cap file size.
+    //todo: add support for more file types, rn is just pdfs
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -107,17 +133,18 @@ public class DocsFragment extends Fragment {
         }
     }
 
-    //todo: this resets when the device rotates. i think this whole thing does too. want to make sure
-    // some stuff saves
     private void setViewingFile(Document document) {
         updateViewingFileText(document);
     }
 
-    //todo: see above. will need to be ran each time this thing gets reset
-    //todo: make sure the length of the file name is capped so it doesn't overlap with the button
     private void updateViewingFileText(Document document) {
         if(document != null) {
-            String sourceString = "<b>" + "Viewing:" + "</b> " + document.getName();
+            String name = document.getName();
+            //todo: probably should rewrite this logic it's hacky
+            if(document.getName().length() > 18) {
+                name = name.substring(0, 18) + "...";
+            }
+            String sourceString = "<b>" + "Viewing:" + "</b> " + name;
             viewingFileText.setText(Html.fromHtml(sourceString));
         } else {
             String sourceString = "<b>" + "Viewing:" + "</b> No File Selected";

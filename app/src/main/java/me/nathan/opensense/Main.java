@@ -1,24 +1,12 @@
 package me.nathan.opensense;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.Settings;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.view.WindowCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
@@ -44,8 +32,8 @@ public class Main extends AppCompatActivity {
         setContentView(R.layout.activity_view);
 
         // Initialize views
-        tabLayout = findViewById(R.id.tab_layout);
-        viewPager = findViewById(R.id.view_pager);
+        tabLayout = findViewById(R.id.mainTabLayout);
+        viewPager = findViewById(R.id.mainViewPager);
         applicationContext = getApplicationContext();
 
         // List of tab titles & icons
